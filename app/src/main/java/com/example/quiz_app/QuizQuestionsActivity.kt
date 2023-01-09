@@ -44,6 +44,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tvOptionFour = findViewById(R.id.tv_option_four)
         btnSubmit = findViewById(R.id.btn_submit)
 
+        tvOptionOne?.setOnClickListener(this)
+        tvOptionTwo?.setOnClickListener(this)
+        tvOptionThree?.setOnClickListener(this)
+        tvOptionFour?.setOnClickListener(this)
+        btnSubmit?.setOnClickListener(this)
+
+
+
         mQuestionsList = Constants.getQuestions()
 
         setQuestion()
@@ -108,7 +116,71 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
-    override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
+    override fun onClick(view: View?) {
+       when(view?.id){
+           R.id.tv_option_one -> {
+               tvOptionOne?.let{
+                   selectedOptionView(it, 1)
+               }
+           }
+           R.id.tv_option_two -> {
+               tvOptionTwo?.let{
+                   selectedOptionView(it, 2)
+               }
+           }
+           R.id.tv_option_three -> {
+               tvOptionThree?.let{
+                   selectedOptionView(it, 3)
+               }
+           }
+           R.id.tv_option_four -> {
+               tvOptionFour?.let{
+                   selectedOptionView(it, 4)
+               }
+           }
+
+           R.id.btn_submit ->{
+               if (mSelectedOptionPosition == 0){
+                   mCurrentPosition++
+
+                   when{
+                       mCurrentPosition <= mQuestionsList!!.size ->{
+                           setQuestion()
+                       }
+                   }
+               }else{
+                   val question = mQuestionsList?.get(mCurrentPosition - 1)
+               }
+           }
+       }
+    }
+
+    private fun answerView(answer: Int, drawableView: Int){
+        when(answer){
+            1 -> {
+                tvOptionOne?.background = ContextCompat.getDrawable(
+                    this,
+                    drawableView
+                )
+            }
+            2 -> {
+                tvOptionTwo?.background = ContextCompat.getDrawable(
+                    this,
+                    drawableView
+                )
+            }
+            3 -> {
+                tvOptionThree?.background = ContextCompat.getDrawable(
+                    this,
+                    drawableView
+                )
+            }
+            4 -> {
+                tvOptionFour?.background = ContextCompat.getDrawable(
+                    this,
+                    drawableView
+                )
+            }
+        }
     }
 }
